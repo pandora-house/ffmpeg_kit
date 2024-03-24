@@ -43,27 +43,25 @@ mixin $FilePickerManagerOperations on WorkerService {
 /// Worker for FilePickerManager
 class FilePickerManagerWorker extends Worker implements FilePickerManager {
   FilePickerManagerWorker({PlatformWorkerHook? platformWorkerHook})
-      : super(
-          $FilePickerManagerActivator,
-          platformWorkerHook: platformWorkerHook,
-        );
+      : super($FilePickerManagerActivator,
+            platformWorkerHook: platformWorkerHook);
 
   @override
   Future<List<dynamic>> readFiles(dynamic list) =>
       send(_$FilePickerManagerWorkerService._$readFilesId, args: [list])
-          .then((_) => _ as List);
+          .then((_) => _.cast<dynamic>());
 }
 
 /// Worker pool for FilePickerManager
 class FilePickerManagerWorkerPool extends WorkerPool<FilePickerManagerWorker>
     implements FilePickerManager {
-  FilePickerManagerWorkerPool({
-    ConcurrencySettings? concurrencySettings,
-    PlatformWorkerHook? platformWorkerHook,
-  }) : super(
-          () => FilePickerManagerWorker(platformWorkerHook: platformWorkerHook),
-          concurrencySettings: concurrencySettings,
-        );
+  FilePickerManagerWorkerPool(
+      {ConcurrencySettings? concurrencySettings,
+      PlatformWorkerHook? platformWorkerHook})
+      : super(
+            () =>
+                FilePickerManagerWorker(platformWorkerHook: platformWorkerHook),
+            concurrencySettings: concurrencySettings);
 
   @override
   Future<List<dynamic>> readFiles(dynamic list) =>

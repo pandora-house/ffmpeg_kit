@@ -21,11 +21,7 @@ class FilePickerBridge implements IFilePickerBridge {
     await pool.start();
 
     final List<FileDto> files =
-        await pool.selectFiles(
-      fileType: fileType,
-      token: RootIsolateToken.instance,
-      allowedExtensions: allowedExtensions,
-    );
+        await pool.selectFiles(token: RootIsolateToken.instance);
 
     final (List<XFile> video, List<XFile> audio, List<XFile> list) =
         await pool.splitFiles(files);
@@ -38,51 +34,3 @@ class FilePickerBridge implements IFilePickerBridge {
     ]).map(FilePickerAddConverted.new).doOnDone(pool.stop);
   }
 }
-
-const allowedExtensions = [
-  'jpeg',
-  'gif',
-  'jpg',
-  'png',
-  'pdf',
-  'doc',
-  'docx',
-  'xls',
-  'xlsx',
-  'ppt',
-  'pptx',
-  'txt',
-  'zip',
-  'rar',
-  'fb2',
-  'epub',
-  'mobi',
-  'mp4',
-  'm4a',
-  'mp3',
-  'avi',
-  'mov',
-  'mkv',
-  '3gp',
-  'mpeg',
-  'mpg',
-  'swf',
-  'asf',
-  'mp2',
-  'wmv',
-  'mts',
-  'flv',
-  'm4v',
-  'ogv',
-  'ogm',
-  'ogg',
-  'oga',
-  'webm',
-  'wav',
-  'bmp',
-  'webp',
-  '7z',
-  'gzip',
-  'djvu',
-  'psd',
-];

@@ -4,11 +4,14 @@
 // Generator: WorkerGenerator 2.4.2
 // **************************************************************************
 
-import 'file_picker_manager.dart';
 import 'package:squadron/squadron.dart';
 
-/// VM entry point for FilePickerManager
-void _start$FilePickerManager(List<dynamic> command) =>
-    run($FilePickerManagerInitializer, command);
+import 'file_picker_manager.dart';
 
-EntryPoint $getFilePickerManagerActivator() => _start$FilePickerManager;
+void main() {
+  /// Web entry point for FilePickerManager
+  run($FilePickerManagerInitializer, null, null);
+}
+
+EntryPoint $getFilePickerManagerActivator() =>
+    '/workers/file_picker_manager.web.g.dart.js';

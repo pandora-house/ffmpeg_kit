@@ -1,4 +1,5 @@
 import 'package:cross_file/cross_file.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
 import 'file_picker/file_picker.dart';
@@ -48,7 +49,7 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () async {
                 final pickerData = FilePickerBridge().addAttachments(
                   context: context,
-                  fileType: null,
+                  fileType: FileType.any,
                 );
 
                 await for (final data in pickerData) {

@@ -54,8 +54,11 @@ class FilePickerBridge implements IFilePickerBridge {
         name: file.name,
       );
       yield FilePickerAddConverted(
-        XFile('',
-            name: data?.name ?? file.name, bytes: data?.bytes ?? file.bytes),
+        XFile(
+          '',
+          name: data?.name ?? file.name,
+          bytes: data?.bytes ?? file.bytes,
+        ),
       );
     }
   }

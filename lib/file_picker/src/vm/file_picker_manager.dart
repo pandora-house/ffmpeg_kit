@@ -3,20 +3,20 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/services.dart';
 import 'package:mime/mime.dart';
 import 'package:squadron/squadron.dart';
+import 'package:squadron/squadron_annotations.dart';
 
 import '../../../ffmpeg_converter/ffmpeg_converter.dart';
 import '../dto/file_dto.dart';
-import 'file_picker_manager_activator.dart';
 
-/// import 'package:squadron/squadron_annotations.dart';
+import 'file_picker_manager.activator.g.dart';
 
-part 'file_picker_manager_worker.dart';
+part 'file_picker_manager.worker.g.dart';
 
-/// @SquadronService(web: false)
+@SquadronService(web: false)
 class FilePickerManager {
   const FilePickerManager();
 
-  /// @SquadronMethod()
+  @SquadronMethod()
   Future<(List<XFile> video, List<XFile> audio, List<XFile> list)> splitFiles(
     List<FileDto> files,
   ) async {
@@ -57,12 +57,13 @@ class FilePickerManager {
       } else if (isVideo) {
         video.add(xFileDto);
       }
-      list.add(XFile.fromData(Uint8List(0), name: file.name));
+
+      list.add(XFile(file.name));
     }
     return (video, audio, list);
   }
 
-  /// @SquadronMethod()
+  @SquadronMethod()
   Stream<XFile> convertVideo(List<XFile> files) async* {
     for (final file in files) {
       final data = await FfmpegConverter().convertVideo(
@@ -80,7 +81,7 @@ class FilePickerManager {
     }
   }
 
-  /// @SquadronMethod()
+  @SquadronMethod()
   Stream<XFile> convertAudio(List<XFile> files) async* {
     for (final file in files) {
       final data = await FfmpegConverter().convertAudio(
@@ -98,12 +99,8 @@ class FilePickerManager {
     }
   }
 
-  /// @SquadronMethod()
-  Future<List<FileDto>> selectFiles({
-    required FileType fileType,
-    required List<String>? allowedExtensions,
-    dynamic token,
-  }) async {
+  @SquadronMethod()
+  Future<List<FileDto>> selectFiles({dynamic token}) async {
     if (token != null) {
       BackgroundIsolateBinaryMessenger.ensureInitialized(
         token as RootIsolateToken,
@@ -114,8 +111,6 @@ class FilePickerManager {
 
     final result = await FilePicker.platform.pickFiles(
       allowMultiple: true,
-      type: fileType,
-      allowedExtensions: allowedExtensions,
     );
 
     if (result == null) {

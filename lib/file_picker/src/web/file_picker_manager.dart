@@ -3,18 +3,18 @@ import 'dart:html';
 import 'dart:typed_data';
 
 import 'package:squadron/squadron.dart';
+import 'package:squadron/squadron_annotations.dart';
 
 import '../dto/file_dto.dart';
-import 'file_picker_manager_activator.dart';
-/// import 'package:squadron/squadron_annotations.dart';
+import 'file_picker_manager.activator.g.dart';
 
-part 'file_picker_manager_worker.dart';
+part 'file_picker_manager.worker.g.dart';
 
-/// @SquadronService(vm: false, baseUrl: '/workers')
+@SquadronService(vm: false, baseUrl: '/workers')
 class FilePickerManager {
   const FilePickerManager();
 
-  /// @SquadronMethod()
+  @SquadronMethod()
   Future<List<dynamic>> readFiles(dynamic list) async {
     final files = list as List<dynamic>?;
 
